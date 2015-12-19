@@ -1,0 +1,9 @@
+<h1>Edit Post</h1>
+<a href="/the_wall">Go back</a>
+<a href="/posts/<%= @post.id %>/show">Show</a>
+<form action="/posts/<%= @post.id %>" method="post">
+  <textarea name="post[text]" value="<%= @post.text %>"><%= @post.text %></textarea>
+  <input type="submit" value="edit">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
+<a href="/posts/<%= @post.id %>" data-method="delete">Delete</a>

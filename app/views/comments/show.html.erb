@@ -1,0 +1,21 @@
+<h1>Show Comment</h1>
+<a href="/the_wall">Go back</a>
+<h4><%= @comment.user.name %> </h4>
+<p><%= @comment.text %></p>
+<p><%= @comment.updated_at.strftime("at %I:%M%p on %m/%d/%Y")%></p>
+<% if @comment.user_id == session[:user_id]%>
+<a href="/comments/<%= @comment.id %>" data-method="delete">Delete</a>
+<a href="/comments/<%= @comment.id %>/edit">Edit</a>
+<% end %>
+
+<p><b>Likes</b>
+
+  <%= @comment.likes.count %>
+
+</p>
+<h4>Liked by</h4>
+<% @comment.likes.each do |like|  %>
+<p>
+  <%= like.user.name %>
+</p>
+<% end %>

@@ -1,0 +1,21 @@
+<h1>Show Post</h1>
+<a href="/the_wall">Go back</a>
+<h4><%= @post.user.name %> </h4>
+<p><%= @post.text %></p>
+<p><%= @post.updated_at.strftime("at %I:%M%p on %m/%d/%Y")%></p>
+<% if @post.user_id == session[:user_id]%>
+
+<p><b>Likes</b>
+
+  <%= @post.likes.count %>
+
+</p>
+<h4>Liked by</h4>
+<% @post.likes.each do |like|  %>
+<p>
+  <%= like.user.name %>
+</p>
+<% end %>
+<a href="/posts/<%= @post.id %>" data-method="delete">Delete</a>
+<a href="/posts/<%= @post.id %>/edit">Edit</a>
+<% end %>

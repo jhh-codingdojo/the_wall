@@ -1,0 +1,9 @@
+<h1>Edit Comment</h1>
+<a href="/the_wall">Go back</a>
+<a href="/comments/<%= @comment.id %>/show">Show</a>
+<form action="/comments/<%= @comment.id %>" method="post">
+  <textarea name="comment[text]" value="<%= @comment.text %>"><%= @comment.text %></textarea>
+  <input type="submit" value="edit">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
+<a href="/comments/<%= @comment.id %>" data-method="delete">Delete</a>

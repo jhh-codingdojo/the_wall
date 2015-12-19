@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+
+<style type="text/css">
+  #map{
+    height: 300px;
+    width: 300px;
+  }
+</style>
+<h1><%= @user.name %></h1>
+<a href="/the_wall">front page</a>
+
+<div id="map">
+</div>
+<!-- san jose lat: 37.3772409, lng: -121.91198079999998 -->
+  <script>
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat:<%= @lat %>, lng: <%= @long %> },
+      zoom: 11
+    });
+
+    var marker= new google.maps.Marker({
+      position:
+      {
+        lat: <%= @lat %>,
+        lng: <%= @long %>
+      },
+
+        map: map
+      });
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCD45SbeW_tH77ya_77msk1CfBzAFmST9Y&callback=initMap">
+ ></script>
+
+
+
+<h2>Email: <%= @user.email %></h2>
+<h2>Location: <%= @user.location %></h2>
+<h2>Posts</h2>
+  <% @user.posts.each do |post| %>
+  <p><%= post.text %> - Likes: <%= post.likes.count %></p>
+  <% end %>
+
+
+<h2>Comments</h2>
+  <% @user.comments.each do |comment| %>
+  <p><%= comment.text %> - Likes: <%= comment.likes.count %></p>
+  <% end %>
+
+
+<% if @user.id == session[:user_id] %>
+  <a href="/users/<%= @user.id %>" data-method="delete">Delete User</a>
+  <a href="/users/<%= @user.id %>/edit">Edit User</a>
+<% end %>

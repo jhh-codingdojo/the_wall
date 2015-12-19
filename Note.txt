@@ -1,0 +1,103 @@
+1. rails new [filename] to create new project
+2. gemfile within [filename] and uncomment bcrypt and add hirb and other gems
+you need then bundle install
+3. in terminal, create model
+rails g model User name:string password:digest...
+then rake db:migrate
+// everytime you create a model always migrate
+// rake db:rollback to reverse migration in case of error in model
+4. in terminal, create controller
+rails g controller Users index new show edit
+5. set homepage view in routes - root "controller#method"
+6. make form page in homepage views- wrap each name for inputs in params
+// add authenticity token for every form
+7. in Users controller - make create function
+pass params thorugh new users
+create params in private portion of the controllers
+params.require([wrapper]).permit(:variables)
+create success message and error message
+flash[:variable] = "message"
+for errors
+flash[:error] = user.errors.full_messages
+don't forget to redirect_to
+8. link through routes - post "users/create" => "users#create"
+9. in view for registration
+<% if flash message exists%>
+  <%= flash message%>
+<% end %>
+
+<% if flash error within array%>
+  <% flasherror.each do |error|%>
+    <%= error %>
+  <% end %>
+<% end %>
+10. create sessions controller
+11. back in main page create login form and have it send to session method
+create
+12. put create method in sesions controller
+have if find_by user name or email
+if user
+  if user authenticate
+    session[:user_id] = user.id
+    redirect to front page
+  else
+    flash error
+    redirect_to "/"
+  end
+
+else
+  flash error
+  redirect_to "/"
+end
+
+13. create front page
+14. make destroy method for session for logout
+simply set session[:user_id] to nil
+on home page have it triggered by a link
+
+15. generate post model text:text user:references
+by using reference post model will have belongs_to automatically
+but you must assign  has_many: posts  to users model
+add dependent: :destroy to user model as well
+16. generate posts controller
+17. make posts controller method create
+instead of using .create
+post = post.new(params)
+then add post.user_id = ?
+// brief argument about best practice assign user_id by calling on @current_user inside the function or session[:user_id]?
+17. in the controller that controls your main page, assign variable @current_user
+and @post
+18. make route to posts/create to user create method
+19. create form to create posts in front page
+20. create post look in console
+21. in front page use ruby function @post.each do |post| to loop text
+preferably with name of user and date
+22. create a delete method in controller
+def destroy
+23. use a form or link to send url "posts/:id" to delete method
+24. route url to destroy method
+25. in destroy method - use params[:id] to grab the id from the url to find the
+post and destroy it
+
+26. create model for Comment text:text user:references post:references
+27. add has many dependent destroy to user and post models
+28. create controller for comments
+29. create form for creating comments in front page
+comments should have hidden input for post_id
+30. route form
+31. make create method for comments
+add users mid way
+32. make destroy method for comments like you did for post form
+route it
+
+33. create like model
+rails g model Like parent:references{polymorphic} user:references
+
+34. create likes controller
+
+
+
+
+errors
+look at server more often
+when deleting, routes might be wrong if the deletion occurs but errors tell you the element with that does not exist
